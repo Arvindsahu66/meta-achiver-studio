@@ -1,0 +1,1408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Meta Achievers Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,900;1,700&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#080808;
+  --off-black:#0f0f0f;
+  --panel:#141414;
+  --panel2:#1a1a1a;
+  --white:#f0ede6;
+  --yellow:#f5c518;
+  --yellow2:#e8a800;
+  --red:#c0392b;
+  --muted:#6a6a6a;
+  --border:#2a2a2a;
+  --font-display:'Bebas Neue',sans-serif;
+  --font-cond:'Barlow Condensed',sans-serif;
+  --font-body:'Barlow',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--black);
+  color:var(--white);
+  font-family:var(--font-body);
+  overflow-x:hidden;
+  cursor:none;
+}
+
+/* ── CUSTOM CURSOR ── */
+#cursor{
+  position:fixed;width:12px;height:12px;
+  background:var(--yellow);border-radius:50%;
+  pointer-events:none;z-index:9999;
+  transform:translate(-50%,-50%);
+  transition:transform 0.08s,width 0.2s,height 0.2s,background 0.2s;
+  mix-blend-mode:difference;
+}
+#cursor-ring{
+  position:fixed;width:40px;height:40px;
+  border:1px solid rgba(245,197,24,0.5);border-radius:50%;
+  pointer-events:none;z-index:9998;
+  transform:translate(-50%,-50%);
+  transition:transform 0.18s ease,width 0.3s,height 0.3s;
+}
+body:hover #cursor{opacity:1}
+
+/* ── GRAIN OVERLAY ── */
+body::after{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:9990;opacity:1;
+}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.4rem 3rem;
+  background:linear-gradient(to bottom,rgba(8,8,8,0.95),transparent);
+  transition:background 0.3s;
+}
+nav.solid{background:rgba(8,8,8,0.97);border-bottom:1px solid var(--border)}
+.nav-logo{
+  font-family:var(--font-display);
+  font-size:1.5rem;letter-spacing:0.12em;
+  color:var(--white);text-decoration:none;
+}
+.nav-logo span{color:var(--yellow)}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{
+  font-family:var(--font-cond);font-size:0.85rem;font-weight:600;
+  letter-spacing:0.2em;text-transform:uppercase;text-decoration:none;
+  color:var(--muted);transition:color 0.2s;
+}
+.nav-links a:hover{color:var(--yellow)}
+.nav-cta{
+  font-family:var(--font-cond);font-size:0.78rem;font-weight:700;
+  letter-spacing:0.2em;text-transform:uppercase;text-decoration:none;
+  color:var(--black);background:var(--yellow);
+  padding:0.55rem 1.4rem;
+  transition:background 0.2s,transform 0.15s;
+}
+.nav-cta:hover{background:var(--yellow2);transform:translateY(-1px)}
+
+/* ── HERO ── */
+#hero{
+  position:relative;height:100vh;min-height:600px;
+  display:flex;align-items:flex-end;
+  overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse at 70% 40%, rgba(245,197,24,0.04) 0%, transparent 60%),
+    linear-gradient(160deg, #0a0a0a 0%, #080808 100%);
+}
+/* Big diagonal stripe */
+.hero-stripe{
+  position:absolute;right:-5%;top:0;bottom:0;
+  width:55%;
+  background:var(--panel);
+  clip-path:polygon(12% 0,100% 0,100% 100%,0% 100%);
+  overflow:hidden;
+}
+.hero-stripe-inner{
+  position:absolute;inset:0;
+  background:
+    repeating-linear-gradient(
+      -45deg,
+      transparent,transparent 40px,
+      rgba(245,197,24,0.018) 40px,rgba(245,197,24,0.018) 41px
+    );
+}
+.hero-video-wrap{
+  position:absolute;right:0;top:0;bottom:0;width:52%;
+  overflow:hidden;
+  clip-path:polygon(8% 0,100% 0,100% 100%,0% 100%);
+}
+.hero-video-wrap video{
+  width:100%;height:100%;object-fit:cover;
+  opacity:0.55;filter:saturate(0.7) contrast(1.1);
+}
+.hero-video-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to right, var(--black) 0%, transparent 40%),
+             linear-gradient(to top, rgba(8,8,8,0.7) 0%, transparent 40%);
+}
+.hero-logo{
+  position:absolute;
+  top:50%;
+  right:3rem;
+  transform:translateY(-50%);
+  z-index:3;
+  width:480px;
+  max-width:50vw;
+  padding:1rem;
+  background:rgba(8,8,8,0.62);
+  border:1px solid rgba(245,197,24,0.18);
+  border-radius:28px;
+  backdrop-filter:blur(12px);
+  box-shadow:0 35px 80px rgba(0,0,0,0.35);
+  pointer-events:none;
+}
+.hero-logo img{
+  width:100%;
+  height:auto;
+  display:block;
+}
+@media(max-width:1200px){
+  .hero-logo{right:2rem;width:420px;}
+}
+@media(max-width:700px){
+  .hero-logo{top:auto;bottom:6rem;right:1.5rem;transform:none;width:360px;}
+}
+.hero-content{
+  position:relative;z-index:2;
+  padding:0 3rem 6rem;
+  max-width:700px;
+}
+.hero-eyebrow{
+  font-family:var(--font-cond);font-size:0.78rem;font-weight:700;
+  letter-spacing:0.35em;text-transform:uppercase;color:var(--yellow);
+  margin-bottom:1rem;display:flex;align-items:center;gap:0.75rem;
+}
+.hero-eyebrow::before{content:'';display:block;width:30px;height:1px;background:var(--yellow)}
+.hero-title{
+  font-family:var(--font-display);
+  font-size:clamp(5rem,10vw,10rem);
+  line-height:0.9;letter-spacing:0.02em;
+  color:var(--white);
+  margin-bottom:1.5rem;
+}
+.hero-title em{font-style:normal;color:var(--yellow)}
+.hero-sub{
+  font-family:var(--font-cond);font-size:1.15rem;font-weight:300;
+  letter-spacing:0.05em;color:rgba(240,237,230,0.6);
+  line-height:1.6;max-width:480px;margin-bottom:2.5rem;
+}
+.hero-actions{display:flex;gap:1rem;align-items:center}
+.btn-primary{
+  font-family:var(--font-cond);font-size:0.8rem;font-weight:700;
+  letter-spacing:0.22em;text-transform:uppercase;text-decoration:none;
+  background:var(--yellow);color:var(--black);
+  padding:1rem 2.4rem;
+  transition:background 0.2s,transform 0.15s;display:inline-block;
+}
+.btn-primary:hover{background:var(--yellow2);transform:translateY(-2px)}
+.btn-ghost{
+  font-family:var(--font-cond);font-size:0.8rem;font-weight:600;
+  letter-spacing:0.22em;text-transform:uppercase;text-decoration:none;
+  border:1px solid rgba(240,237,230,0.25);color:var(--white);
+  padding:1rem 2rem;
+  transition:border-color 0.2s,color 0.2s;display:inline-block;
+}
+.btn-ghost:hover{border-color:var(--yellow);color:var(--yellow)}
+.hero-scroll{
+  position:absolute;bottom:2.5rem;right:3rem;z-index:2;
+  display:flex;flex-direction:column;align-items:center;gap:0.5rem;
+  font-family:var(--font-cond);font-size:0.65rem;font-weight:600;
+  letter-spacing:0.3em;text-transform:uppercase;color:var(--muted);
+}
+.hero-scroll-line{
+  width:1px;height:50px;background:linear-gradient(to bottom,var(--yellow),transparent);
+  animation:scrollLine 2s ease-in-out infinite;
+}
+@keyframes scrollLine{0%,100%{transform:scaleY(1);opacity:1}50%{transform:scaleY(0.5);opacity:0.5}}
+
+/* ── SECTION SHARED ── */
+.section-label{
+  font-family:var(--font-cond);font-size:0.72rem;font-weight:700;
+  letter-spacing:0.35em;text-transform:uppercase;color:var(--yellow);
+  display:flex;align-items:center;gap:0.75rem;margin-bottom:1.2rem;
+}
+.section-label::before{content:'';display:block;width:24px;height:1px;background:var(--yellow)}
+.section-title{
+  font-family:var(--font-display);
+  font-size:clamp(3.5rem,7vw,7rem);
+  line-height:0.88;letter-spacing:0.02em;color:var(--white);
+  margin-bottom:0;
+}
+.section-title em{font-style:normal;color:var(--yellow)}
+
+/* ──────────────────────────────────────────
+   PROJECTS WE ARE WORKING ON
+────────────────────────────────────────── */
+#projects{
+  padding:0;background:var(--black);
+  position:relative;overflow:hidden;
+}
+.projects-header{
+  padding:8rem 3rem 5rem;
+  display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:end;
+  max-width:1400px;margin:0 auto;
+}
+.projects-header-right{
+  font-family:var(--font-cond);font-size:1.1rem;font-weight:300;
+  letter-spacing:0.03em;color:rgba(240,237,230,0.5);line-height:1.7;
+  padding-bottom:0.5rem;
+}
+
+/* Big horizontal project list — Rockstar style */
+.proj-list{max-width:1400px;margin:0 auto;padding:0 3rem 8rem}
+
+.proj-item{
+  display:grid;grid-template-columns:80px minmax(360px,1fr) 220px 120px;
+  align-items:center;gap:1.75rem;
+  border-top:1px solid var(--border);
+  padding:2.5rem 0;
+  position:relative;
+  cursor:none;
+  transition:background 0.3s;
+  overflow:hidden;
+}
+.proj-item::before{
+  content:'';position:absolute;inset:0;
+  background:var(--panel);
+  transform:scaleX(0);transform-origin:left;
+  transition:transform 0.5s cubic-bezier(0.4,0,0.2,1);
+  z-index:0;
+}
+.proj-item:hover::before{transform:scaleX(1)}
+.proj-item:last-child{border-bottom:1px solid var(--border)}
+.proj-item > *{position:relative;z-index:1}
+
+.proj-preview{
+  position:relative;
+  width:100%;
+  aspect-ratio: 16/9;
+  min-height:160px;
+  background:linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));
+  border-radius:24px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,0.06);
+  box-shadow:inset 0 0 45px rgba(0,0,0,0.18),0 24px 50px rgba(0,0,0,0.12);
+  /* arrow-shaped preview */
+  clip-path:polygon(0 0,calc(100% - 70px) 0,100% 50%,calc(100% - 70px) 100%,0 100%);
+  background-repeat:no-repeat;
+  background-size:cover;
+  background-position:center;
+}
+.proj-preview--parakram{
+  background-image:url("images/Parakim.jpeg");
+  background-size:cover;
+  background-position:center;
+}
+.proj-preview--arresc{
+  background-image:url("images/arresc.png");
+  background-size:cover;
+  background-position:center;
+}
+.proj-preview::before{
+  /* subtle dark overlay to help text/contrast without hiding image */
+  content:'';
+  position:absolute;inset:0;
+  background:linear-gradient(to right,rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.12) 45%, rgba(0,0,0,0) 70%);
+  pointer-events:none;
+}
+.proj-preview img{width:100%;height:100%;object-fit:cover;display:block}
+.proj-preview::after{display:none}
+.proj-num{
+  font-family:var(--font-display);font-size:1rem;
+  letter-spacing:0.18em;color:var(--muted);
+}
+.proj-main{display:flex;flex-direction:column;gap:0.45rem}
+.proj-name{
+  font-family:var(--font-display);font-size:clamp(2rem,4vw,3.5rem);
+  letter-spacing:0.04em;color:var(--white);
+  transition:color 0.3s;
+  max-width:98%;
+}
+.proj-item:hover .proj-name{color:var(--yellow)}
+.proj-meta{
+  display:flex;flex-wrap:wrap;gap:0.85rem;align-items:center;
+  font-family:var(--font-cond);font-size:0.78rem;font-weight:600;
+  letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);
+}
+.proj-meta .dot{width:4px;height:4px;background:var(--border);border-radius:50%}
+.proj-badge{
+  font-family:var(--font-cond);font-size:0.65rem;font-weight:700;
+  letter-spacing:0.2em;text-transform:uppercase;
+  padding:0.3rem 0.8rem;
+}
+.badge-dev  {border:1px solid rgba(240,237,230,0.2);color:rgba(240,237,230,0.5)}
+.badge-alpha{border:1px solid rgba(245,197,24,0.4);color:var(--yellow)}
+.badge-beta {background:var(--yellow);color:var(--black)}
+.proj-progress-wrap{
+  display:flex;flex-direction:column;align-items:flex-end;gap:0.6rem;
+  min-width:120px;justify-self:end;align-self:center;height:56px;
+}
+.proj-pct{
+  font-family:var(--font-display);font-size:1.8rem;
+  letter-spacing:0.05em;color:var(--white);
+}
+.proj-track{
+  width:160px;height:2px;background:var(--border);
+  position:relative;overflow:hidden;
+}
+.proj-fill{
+  position:absolute;top:0;left:0;height:100%;
+  background:var(--yellow);
+  transition:width 1.5s cubic-bezier(0.4,0,0.2,1);
+}
+.proj-fill-init{width:0!important}
+
+/* ──────────────────────────────────────────
+   LAUNCHED GAMES
+────────────────────────────────────────── */
+#launched{
+  background:var(--off-black);
+  position:relative;overflow:hidden;
+}
+/* top diagonal cut */
+#launched::before{
+  content:'';position:absolute;top:-2px;left:0;right:0;
+  height:80px;background:var(--black);
+  clip-path:polygon(0 0,100% 0,100% 0,0 100%);
+  z-index:1;
+}
+.launched-inner{
+  max-width:1400px;margin:0 auto;
+  padding:10rem 3rem 0;
+  position:relative;z-index:2;
+}
+.launched-header{
+  display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:end;
+  margin-bottom:5rem;
+}
+.launched-header-right{
+  font-family:var(--font-cond);font-size:1.05rem;font-weight:300;
+  letter-spacing:0.03em;color:rgba(240,237,230,0.45);line-height:1.7;
+  padding-bottom:0.5rem;
+}
+
+/* Featured game — cinematic fullbleed */
+.game-featured{
+  position:relative;width:100%;margin-left:0;
+  height:75vh;min-height:500px;overflow:hidden;
+  display:flex;align-items:flex-end;
+  margin-bottom:4px;
+  border-radius:24px;
+}
+.game-featured-video{
+  position:absolute;inset:0;
+  background:var(--panel);
+  overflow:hidden;
+}
+.game-featured-video video{
+  width:100%;height:100%;object-fit:cover;
+  filter:saturate(0.6) contrast(1.15) brightness(0.75);
+}
+.game-featured-video-overlay{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(to top, rgba(8,8,8,0.95) 0%, rgba(8,8,8,0.3) 40%, transparent 70%),
+    linear-gradient(to right, rgba(8,8,8,0.5) 0%, transparent 50%);
+}
+.game-featured-play{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:80px;height:80px;
+  border:2px solid rgba(245,197,24,0.6);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  cursor:none;
+  transition:background 0.3s,border-color 0.3s,transform 0.3s;
+  z-index:2;
+}
+.game-featured-play:hover{
+  background:rgba(245,197,24,0.15);
+  border-color:var(--yellow);
+  transform:translate(-50%,-50%) scale(1.1);
+}
+.game-featured-content{
+  position:relative;z-index:2;padding:3rem 3rem 3rem;width:100%;
+  display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;
+}
+.game-featured-platforms{
+  display:flex;gap:0.6rem;margin-bottom:1rem;
+}
+.plat-badge{
+  font-family:var(--font-cond);font-size:0.62rem;font-weight:700;
+  letter-spacing:0.2em;text-transform:uppercase;
+  padding:0.3rem 0.9rem;
+  border:1px solid rgba(240,237,230,0.2);color:rgba(240,237,230,0.6);
+}
+.plat-steam{border-color:rgba(100,180,255,0.4);color:#8ab4f8}
+.game-featured-title{
+  font-family:var(--font-display);
+  font-size:clamp(3rem,6vw,6rem);
+  line-height:0.88;letter-spacing:0.02em;
+  color:var(--white);margin-bottom:0.75rem;
+}
+.game-featured-genre{
+  font-family:var(--font-cond);font-size:0.78rem;font-weight:600;
+  letter-spacing:0.25em;text-transform:uppercase;
+  color:rgba(240,237,230,0.4);
+}
+.game-featured-right{
+  text-align:right;flex-shrink:0;min-width:220px;
+}
+.game-rating-big{
+  font-family:var(--font-display);font-size:5rem;
+  letter-spacing:0.02em;color:var(--yellow);line-height:1;
+  margin-bottom:0.3rem;
+}
+.game-rating-label{
+  font-family:var(--font-cond);font-size:0.7rem;font-weight:700;
+  letter-spacing:0.25em;text-transform:uppercase;
+  color:rgba(240,237,230,0.35);margin-bottom:1.2rem;
+}
+.game-featured-stats{
+  display:flex;gap:2rem;justify-content:flex-end;
+  margin-bottom:1.5rem;
+}
+.fstat-val{
+  font-family:var(--font-display);font-size:1.6rem;color:var(--white);
+  display:block;line-height:1;
+}
+.fstat-label{
+  font-family:var(--font-cond);font-size:0.65rem;font-weight:600;
+  letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);
+}
+
+/* More games grid — 3 column tiles */
+.games-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;
+  width:100%;margin-left:0;
+  margin-bottom:0;
+  padding:0;
+}
+.game-tile{
+  position:relative;overflow:hidden;
+  aspect-ratio:4/3;background:var(--panel);
+  cursor:none;
+}
+.game-tile-bg{
+  position:absolute;inset:0;
+  background:var(--panel2);
+  transition:transform 0.6s cubic-bezier(0.4,0,0.2,1),filter 0.4s;
+  filter:saturate(0.3) brightness(0.7);
+}
+.game-tile:hover .game-tile-bg{
+  transform:scale(1.05);
+  filter:saturate(0.6) brightness(0.85);
+}
+/* Placeholder graphic per tile */
+.tile-gfx{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+.tile-gfx img{
+  width:100%;height:100%;object-fit:cover;display:block;
+}
+.game-tile-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(8,8,8,0.9) 0%,rgba(8,8,8,0.2) 60%,transparent 100%);
+  transition:background 0.4s;
+}
+.game-tile:hover .game-tile-overlay{
+  background:linear-gradient(to top,rgba(8,8,8,0.95) 0%,rgba(8,8,8,0.4) 60%,rgba(8,8,8,0.1) 100%);
+}
+.game-tile-content{
+  position:absolute;bottom:0;left:0;right:0;
+  padding:1.5rem;
+  transform:translateY(10px);transition:transform 0.4s;
+}
+.game-tile:hover .game-tile-content{transform:translateY(0)}
+.game-tile-name{
+  font-family:var(--font-display);font-size:1.6rem;
+  letter-spacing:0.04em;color:var(--white);
+  margin-bottom:0.3rem;
+}
+.game-tile-meta{
+  display:flex;justify-content:space-between;align-items:center;
+  font-family:var(--font-cond);font-size:0.72rem;font-weight:600;
+  letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);
+  margin-bottom:0.6rem;
+}
+.game-tile-action{
+  font-family:var(--font-cond);font-size:0.7rem;font-weight:700;
+  letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--yellow);
+  display:flex;align-items:center;gap:0.5rem;
+  opacity:0;transform:translateY(8px);
+  transition:opacity 0.35s 0.05s,transform 0.35s 0.05s;
+}
+.game-tile:hover .game-tile-action{opacity:1;transform:translateY(0)}
+.game-tile-action::after{content:'→'}
+
+/* ──────────────────────────────────────────
+   ACHIEVEMENTS
+────────────────────────────────────────── */
+#achievements{
+  background:var(--black);
+  padding:10rem 3rem 8rem;
+  position:relative;overflow:hidden;
+}
+/* Big decorative number behind */
+#achievements::before{
+  content:'//';
+  position:absolute;top:-2rem;right:-1rem;
+  font-family:var(--font-display);font-size:30vw;
+  color:rgba(240,237,230,0.012);
+  pointer-events:none;letter-spacing:-0.05em;
+  line-height:1;user-select:none;
+}
+.achievements-inner{max-width:1400px;margin:0 auto}
+.ach-header{
+  display:grid;grid-template-columns:1fr 1fr;gap:3rem;
+  align-items:end;margin-bottom:6rem;
+}
+.ach-header-right{
+  font-family:var(--font-cond);font-size:1.05rem;font-weight:300;
+  letter-spacing:0.03em;color:rgba(240,237,230,0.45);line-height:1.7;
+  padding-bottom:0.5rem;
+}
+
+/* Stats — Rockstar-style big number row */
+.stats-row{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  border:1px solid var(--border);margin-bottom:6rem;
+}
+.stat-block{
+  padding:3rem 2rem;border-right:1px solid var(--border);
+  position:relative;overflow:hidden;
+  transition:background 0.3s;
+}
+.stat-block:last-child{border-right:none}
+.stat-block:hover{background:var(--panel)}
+.stat-block::after{
+  content:'';position:absolute;bottom:0;left:0;
+  width:0;height:2px;background:var(--yellow);
+  transition:width 0.5s ease;
+}
+.stat-block:hover::after{width:100%}
+.stat-number{
+  font-family:var(--font-display);
+  font-size:clamp(3rem,5vw,5.5rem);
+  letter-spacing:0.02em;color:var(--white);
+  line-height:1;display:block;
+}
+.stat-suffix{color:var(--yellow)}
+.stat-label{
+  font-family:var(--font-cond);font-size:0.72rem;font-weight:700;
+  letter-spacing:0.28em;text-transform:uppercase;
+  color:var(--muted);margin-top:0.5rem;display:block;
+}
+
+/* Achievement grid — editorial asymmetric */
+.ach-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  grid-template-rows:auto auto;
+  gap:1px;background:var(--border);
+}
+.ach-card{
+  background:var(--black);padding:2.5rem;
+  position:relative;overflow:hidden;
+  transition:background 0.35s;
+  cursor:none;
+}
+.ach-card:hover{background:var(--panel)}
+.ach-card.featured{
+  grid-column:span 2;
+  background:var(--panel);
+}
+.ach-card-year{
+  font-family:var(--font-display);font-size:5rem;
+  letter-spacing:0.02em;
+  color:rgba(240,237,230,0.06);
+  position:absolute;top:1rem;right:1.5rem;
+  line-height:1;pointer-events:none;user-select:none;
+}
+.ach-card-icon{
+  font-size:2rem;margin-bottom:1.2rem;display:block;
+  filter:grayscale(0.3);
+}
+.ach-card-title{
+  font-family:var(--font-display);font-size:1.4rem;
+  letter-spacing:0.04em;color:var(--white);
+  margin-bottom:0.75rem;line-height:1.1;
+}
+.ach-card.featured .ach-card-title{font-size:2rem}
+.ach-card-desc{
+  font-family:var(--font-cond);font-size:0.95rem;font-weight:300;
+  letter-spacing:0.02em;color:rgba(240,237,230,0.45);line-height:1.65;
+}
+.ach-card-tag{
+  display:inline-block;margin-top:1.2rem;
+  font-family:var(--font-cond);font-size:0.65rem;font-weight:700;
+  letter-spacing:0.25em;text-transform:uppercase;
+  color:var(--yellow);
+  border-top:1px solid rgba(245,197,24,0.3);
+  padding-top:0.6rem;
+}
+
+/* ──────────────────────────────────────────
+   CONTACT
+────────────────────────────────────────── */
+#contact{
+  background:var(--off-black);
+  padding:10rem 3rem 8rem;
+}
+.contact-inner{
+  max-width:1400px;margin:0 auto;
+}
+.contact-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;
+}
+.contact-left{
+  display:flex;flex-direction:column;gap:1.5rem;
+}
+.contact-left .section-label{margin-bottom:0.75rem;}
+.contact-left .section-title{max-width:620px;}
+.contact-left p{
+  font-family:var(--font-cond);font-size:1.05rem;font-weight:300;
+  letter-spacing:0.03em;color:rgba(240,237,230,0.55);line-height:1.8;
+}
+.contact-form{
+  display:grid;gap:1rem;
+  padding:2.5rem 2.5rem 2.25rem;
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:24px;
+}
+.contact-field{
+  display:flex;flex-direction:column;gap:0.5rem;
+}
+.contact-field label{
+  font-family:var(--font-cond);font-size:0.75rem;font-weight:600;
+  letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);
+}
+.contact-field input,
+.contact-field textarea{
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  color:var(--white);
+  padding:1rem 1rem;
+  border-radius:14px;
+  font-family:var(--font-body);font-size:1rem;
+  outline:none;
+  transition:border-color 0.2s,background 0.2s;
+}
+.contact-field input:focus,
+.contact-field textarea:focus{
+  border-color:var(--yellow);
+  background:rgba(255,255,255,0.08);
+}
+.contact-field textarea{min-height:200px;resize:vertical;}
+.contact-submit{
+  margin-top:0.75rem;
+  align-self:flex-start;
+}
+.contact-submit button{
+  font-family:var(--font-cond);font-size:0.85rem;font-weight:700;
+  letter-spacing:0.18em;text-transform:uppercase;
+  background:var(--yellow);color:var(--black);
+  border:none;padding:1rem 2rem;border-radius:14px;
+  cursor:pointer;transition:background 0.2s,transform 0.15s;
+}
+.contact-submit button:hover{background:var(--yellow2);transform:translateY(-1px);}
+
+/* ──────────────────────────────────────────
+   FOOTER
+────────────────────────────────────────── */
+footer{
+  background:var(--off-black);
+  border-top:1px solid var(--border);
+}
+.footer-main{
+  max-width:1400px;margin:0 auto;
+  padding:6rem 3rem 4rem;
+  display:grid;grid-template-columns:2.5fr 1fr 1fr 1fr;gap:4rem;
+}
+.footer-logo{
+  font-family:var(--font-display);font-size:2rem;
+  letter-spacing:0.1em;color:var(--white);
+  margin-bottom:1.2rem;display:block;
+}
+.footer-logo span{color:var(--yellow)}
+.footer-tagline{
+  font-family:var(--font-cond);font-size:0.95rem;font-weight:300;
+  letter-spacing:0.03em;color:rgba(240,237,230,0.35);
+  line-height:1.7;max-width:300px;margin-bottom:2rem;
+}
+.footer-socials{display:flex;gap:0.75rem}
+.social-link{
+  width:38px;height:38px;
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--muted);text-decoration:none;
+  transition:border-color 0.25s,color 0.25s,background 0.25s;
+}
+.social-link:hover{border-color:var(--yellow);color:var(--yellow);background:rgba(245,197,24,0.06)}
+.footer-col-title{
+  font-family:var(--font-display);font-size:1rem;
+  letter-spacing:0.12em;color:var(--white);margin-bottom:1.5rem;
+}
+.footer-nav{list-style:none;display:flex;flex-direction:column;gap:0.7rem}
+.footer-nav a{
+  font-family:var(--font-cond);font-size:0.88rem;font-weight:400;
+  letter-spacing:0.08em;color:var(--muted);text-decoration:none;
+  transition:color 0.2s;display:flex;align-items:center;gap:0.4rem;
+}
+.footer-nav a:hover{color:var(--white)}
+.footer-nav a::before{
+  content:'';width:0;height:1px;background:var(--yellow);
+  transition:width 0.25s;flex-shrink:0;
+}
+.footer-nav a:hover::before{width:12px}
+.footer-bottom{
+  border-top:1px solid var(--border);
+  max-width:1400px;margin:0 auto;
+  padding:1.5rem 3rem;
+  display:flex;justify-content:space-between;align-items:center;
+  gap:1rem;
+}
+.footer-copy{
+  font-family:var(--font-cond);font-size:0.75rem;font-weight:400;
+  letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);
+}
+.footer-legal{
+  display:flex;gap:2rem;
+  list-style:none;
+}
+.footer-legal a{
+  font-family:var(--font-cond);font-size:0.72rem;font-weight:400;
+  letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--muted);text-decoration:none;
+  transition:color 0.2s;
+}
+.footer-legal a:hover{color:var(--yellow)}
+.footer-engine{
+  font-family:var(--font-cond);font-size:0.72rem;font-weight:600;
+  letter-spacing:0.18em;text-transform:uppercase;
+  color:rgba(240,237,230,0.2);
+  display:flex;align-items:center;gap:0.5rem;
+}
+.footer-engine span{color:var(--yellow)}
+
+/* ── SCROLL REVEAL ── */
+.reveal{opacity:0;transform:translateY(40px);transition:opacity 0.8s ease,transform 0.8s ease}
+.reveal.visible{opacity:1;transform:none}
+.reveal-left{opacity:0;transform:translateX(-40px);transition:opacity 0.8s ease,transform 0.8s ease}
+.reveal-left.visible{opacity:1;transform:none}
+.reveal-delay-1{transition-delay:0.12s}
+.reveal-delay-2{transition-delay:0.24s}
+.reveal-delay-3{transition-delay:0.36s}
+.reveal-delay-4{transition-delay:0.48s}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1024px){
+  .projects-header,.launched-header,.ach-header{grid-template-columns:1fr}
+  .game-featured-content{flex-direction:column;align-items:flex-start}
+  .game-featured-right{text-align:left}
+  .games-grid{grid-template-columns:1fr 1fr}
+  .stats-row{grid-template-columns:1fr 1fr}
+  .ach-grid{grid-template-columns:1fr 1fr}
+  .ach-card.featured{grid-column:span 1}
+  .footer-main{grid-template-columns:1fr 1fr}
+  .contact-grid{grid-template-columns:1fr}
+}
+@media(max-width:680px){
+  nav{padding:1.2rem 1.5rem}
+  .nav-links{display:none}
+  .hero-content{padding:0 1.5rem 5rem}
+  .proj-list,.projects-header,.launched-inner,.achievements-inner,.footer-main{padding-left:1.5rem;padding-right:1.5rem}
+  .proj-item{grid-template-columns:50px 1fr;gap:1rem}
+  .proj-progress-wrap{display:none}
+  .game-featured{width:100%;margin-left:0}
+  .games-grid{width:100%;margin-left:0;grid-template-columns:1fr}
+  .stats-row{grid-template-columns:1fr 1fr}
+  .ach-grid{grid-template-columns:1fr}
+  .footer-main{grid-template-columns:1fr;padding-top:4rem}
+  .footer-bottom{flex-direction:column;text-align:center}
+  .footer-legal{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- Custom cursor -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- ══════════════════════════════════
+     NAV
+══════════════════════════════════ -->
+<nav id="nav">
+  <a class="nav-logo" href="#">META<span>ACHIEVERS</span></a>
+  <ul class="nav-links">
+    <li><a href="projects/">Projects</a></li>
+    <li><a href="#launched">Games</a></li>
+    <li><a href="#achievements">Studio</a></li>
+    <li><a href="./privacypolicy_ChaseChaos/">Privacy Policy</a></li>
+  </ul>
+  <a href="#launched" class="nav-cta">View Games</a>
+</nav>
+
+<!-- ══════════════════════════════════
+     HERO
+══════════════════════════════════ -->
+<section id="hero">
+  <div class="hero-bg"></div>
+
+  <div class="hero-stripe">
+    <div class="hero-stripe-inner"></div>
+  </div>
+
+  <div class="hero-video-wrap">
+    <video id="heroVideo" src="Video/Public.mp4" autoplay muted loop playsinline preload="auto">
+      <source src="Video/Public.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <div class="hero-video-overlay"></div>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">Meta Achievers Studio</div>
+    <h1 class="hero-title">WE BUILD<br/><em>WORLDS</em></h1>
+    <p class="hero-sub">Crafting visceral, cinematic gaming experiences on Unity — shipped on Steam, played worldwide.</p>
+    <div class="hero-actions">
+      <a href="#launched" class="btn-primary">Explore Games</a>
+      <a href="#projects" class="btn-ghost">In Development</a>
+    </div>
+  </div>
+
+  <div class="hero-logo">
+    <img src="images/MGlogo.png" alt="MG Logo">
+  </div>
+
+  <div class="hero-scroll">
+    <div class="hero-scroll-line"></div>
+    Scroll
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     PROJECTS WE ARE WORKING ON
+══════════════════════════════════ -->
+<section id="projects">
+  <div class="projects-header">
+    <div class="reveal-left">
+      <div class="section-label">Projects We Are Working On</div>
+      <h2 class="section-title">PROJECTS<br/><em>WE ARE WORKING ON</em></h2>
+    </div>
+    <div class="projects-header-right reveal reveal-delay-1">
+      Our studio runs multiple productions simultaneously — from early prototypes to near-launch titles. Every project we touch is built to a cinematic standard.
+    </div>
+  </div>
+
+  <div class="proj-list">
+
+    <div class="proj-item reveal">
+      <div class="proj-num">01</div>
+      <div class="proj-main">
+        <div class="proj-name">PARAKRAM</div>
+        <div class="proj-meta">
+          <span>2D Tackler Game</span>
+          <span class="dot"></span>
+          <span>Unity 6</span>
+          <span class="dot"></span>
+          <span>Android PC / iOS</span>
+          <span class="proj-badge badge-beta" style="margin-left:0.5rem">Beta</span>
+        </div>
+      </div>
+      <div class="proj-preview"><img src="images/Parakim.jpeg" alt="PARAKRAM preview"></div>
+      <div class="proj-progress-wrap">
+        <div class="proj-pct" data-pct="95%">0%</div>
+        <div class="proj-track"><div class="proj-fill proj-fill-init" style="width:95%"></div></div>
+      </div>
+    </div>
+
+    <div class="proj-item reveal reveal-delay-1">
+      <div class="proj-num">02</div>
+      <div class="proj-main">
+        <div class="proj-name">ARROW ESC</div>
+        <div class="proj-meta">
+          <span>2D Puzzle Game</span>
+          <span class="dot"></span>
+          <span>Unity 6</span>
+          <span class="dot"></span>
+          <span>PC</span>
+          <span class="proj-badge badge-alpha" style="margin-left:0.5rem">Alpha</span>
+        </div>
+      </div>
+      <div class="proj-preview"><img src="images/arresc.png" alt="ARROW ESC preview"></div>
+      <div class="proj-progress-wrap">
+        <div class="proj-pct" data-pct="80%">0%</div>
+        <div class="proj-track"><div class="proj-fill proj-fill-init" style="width:80%"></div></div>
+      </div>
+    </div>
+
+    <div class="proj-item reveal reveal-delay-2">
+      <div class="proj-num">03</div>
+      <div class="proj-main">
+        <div class="proj-name">Traffic Rules</div>
+        <div class="proj-meta">
+          <span>3D Car Simulation Learning Game</span>
+          <span class="dot"></span>
+          <span>Unity 6</span>
+          <span class="dot"></span>
+          <span>PC / Mobile</span>
+          <span class="proj-badge badge-dev" style="margin-left:0.5rem">Early Dev</span>
+        </div>
+      </div>
+      <div class="proj-preview"><img src="images/trf.jpg" alt="Traffic Rules preview"></div>
+      <div class="proj-progress-wrap">
+        <div class="proj-pct" data-pct="60%">0%</div>
+        <div class="proj-track"><div class="proj-fill proj-fill-init" style="width:60%"></div></div>
+      </div>
+    </div>
+
+    <div class="proj-item reveal reveal-delay-3">
+      <div class="proj-num">04</div>
+      <div class="proj-main">
+        <div class="proj-name">VR SIMULATION</div>
+        <div class="proj-meta">
+          <span>VR Simulation for Education</span>
+          <span class="dot"></span>
+          <span>Unity 6</span>
+          <span class="dot"></span>
+          <span>PC</span>
+          <span class="proj-badge badge-dev" style="margin-left:0.5rem">Prototype</span>
+        </div>
+      </div>
+      <div class="proj-preview"><img src="images/vrmed.jpg" alt="VR Simulation preview"></div>
+      <div class="proj-progress-wrap">
+        <div class="proj-pct" data-pct="95%">0%</div>
+        <div class="proj-track"><div class="proj-fill proj-fill-init" style="width:15%"></div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     LAUNCHED GAMES
+══════════════════════════════════ -->
+<section id="launched">
+  <div class="launched-inner">
+    <div class="launched-header">
+      <div class="reveal-left">
+        <div class="section-label">Live on Steam</div>
+        <h2 class="section-title">SHIPPED<br/><em>TITLES</em></h2>
+      </div>
+      <div class="launched-header-right reveal reveal-delay-1">
+        From prototype to Steam listing — every title is a statement. Built in Unity, polished to ship, and played by communities around the world.
+      </div>
+    </div>
+  </div>
+
+  <!-- Fullbleed featured game with video -->
+  <div class="game-featured reveal">
+    <div class="game-featured-video">
+      <video id="featuredVideo" src="Video/Public.mp4" autoplay loop muted playsinline preload="auto">
+        <source src="Video/Public.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div class="game-featured-video-overlay"></div>
+    </div>
+
+    <div class="game-featured-play" id="featuredPlay" onclick="toggleFeatured()">
+      <svg id="fPlayIcon" width="24" height="24" viewBox="0 0 24 24" fill="#f5c518"><polygon points="6,3 20,12 6,21"/></svg>
+      <svg id="fPauseIcon" width="24" height="24" viewBox="0 0 24 24" fill="#f5c518" style="display:none"><rect x="4" y="3" width="5" height="18"/><rect x="15" y="3" width="5" height="18"/></svg>
+    </div>
+
+    <div class="game-featured-content">
+      <div class="game-featured-left">
+        <div class="game-featured-platforms">
+          <span class="plat-badge">Unity</span>
+          <span class="plat-badge plat-steam">VR Trainning Simulation</span>
+          <span class="plat-badge">PC</span>
+        </div>
+        <div class="game-featured-title">VR Networking<br/>Lab</div>
+        <div class="game-featured-genre">Educational . Trainning  . 2025</div>
+      </div>
+      <div class="game-featured-right">
+        <div class="game-rating-big">4.8</div>
+        <div class="game-rating-label"> Rating</div>
+        <div class="game-featured-stats">
+          <div>
+            <span class="fstat-val">10K+</span>
+            <span class="fstat-label">Played this Simulation</span>
+          </div>
+          <div>
+            <span class="fstat-val">96%</span>
+            <span class="fstat-label">Positive</span>
+          </div>
+        </div>
+        <a href="#" class="btn-primary" style="font-size:0.72rem;padding:0.8rem 1.8rem">View on Steam →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- More games -->
+  <div class="games-grid">
+
+    <div class="game-tile reveal reveal-delay-1">
+      <div class="game-tile-bg">
+        <div class="tile-gfx">
+          <img src="images/Shuruka.png" alt="Shuruka Boxing">
+        </div>
+      </div>
+      <div class="game-tile-overlay"></div>
+      <div class="game-tile-content">
+        <div class="game-tile-name">SHUHRUKA BOXING</div>
+        <div class="game-tile-meta">
+          <span>REAL BOXING GAME</span>
+          <span>★ 4</span>
+        </div>
+        <div class="game-tile-action">View on Steam</div>
+      </div>
+    </div>
+
+    <div class="game-tile reveal reveal-delay-2">
+      <div class="game-tile-bg">
+        <div class="tile-gfx">
+          <img src="images/Ts.png" alt="Uttilsens Traffic Sens">
+        </div>
+      </div>
+      <div class="game-tile-overlay"></div>
+      <div class="game-tile-content">
+        <div class="game-tile-name">UTTILSENS TRAFFIC SENS</div>
+        <div class="game-tile-meta">
+          <span>Traffic Learning and Safety</span>
+          <span>★ 3.9</span>
+        </div>
+        <div class="game-tile-action">View on Steam</div>
+      </div>
+    </div>
+
+    <div class="game-tile reveal reveal-delay-3">
+      <div class="game-tile-bg">
+        <div class="tile-gfx">
+          <img src="images/VRsaf.jpg" alt="VR Safety Simulations">
+        </div>
+      </div>
+      <div class="game-tile-overlay"></div>
+      <div class="game-tile-content">
+        <div class="game-tile-name">VR Safety Simulations</div>
+        <div class="game-tile-meta">
+          <span>Safety Trainning</span>
+          <span>★ 4.6</span>
+        </div>
+        <div class="game-tile-action">View on Steam</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     ACHIEVEMENTS
+══════════════════════════════════ -->
+<section id="achievements">
+  <div class="achievements-inner">
+    <div class="ach-header">
+      <div class="reveal-left">
+        <div class="section-label">Track Record</div>
+        <h2 class="section-title">WHAT WE'VE<br/><em>EARNED</em></h2>
+      </div>
+      <div class="ach-header-right reveal reveal-delay-1">
+        One and a half years of building in XR.<br/>From first prototypes to award-winning experiences — we measure success in immersion, impact, and the realities we reshape.
+      </div>
+    </div>
+
+    <!-- Stats strip -->
+    <div class="stats-row reveal">
+      <div class="stat-block">
+        <span class="stat-number"><span id="c1">0</span></span>
+        <span class="stat-label">Total Players</span>
+      </div>
+      <div class="stat-block">
+        <span class="stat-number"><span id="c2">0</span></span>
+        <span class="stat-label">Games Shipped</span>
+      </div>
+      <div class="stat-block">
+        <span class="stat-number"><span id="c3">0</span></span>
+        <span class="stat-label">Industry Awards</span>
+      </div>
+      <div class="stat-block">
+        <span class="stat-number"><span id="c4">0</span></span>
+        <span class="stat-label">Years Active</span>
+      </div>
+    </div>
+
+    <!-- Achievement cards -->
+    <div class="ach-grid">
+
+      <div class="ach-card featured reveal reveal-delay-1">
+        <div class="ach-card-year">2025</div>
+        <span class="ach-card-icon">🏆</span>
+        <div class="ach-card-title">BEST INDIE XR <br/>SIMULATION OF THE YEAR</div>
+      <p class="ach-card-desc">FICCI BAF AWARD IN XR IN EDUCATION, TOURISM IN THE 1ST YEAR OF THE COMPANY </p>
+        <div class="ach-card-tag">2025 · FICCI Award · Category Winner</div>
+      </div>
+
+      <div class="ach-card reveal reveal-delay-2">
+        <div class="ach-card-year">25</div>
+        <span class="ach-card-icon">⭐</span>
+        <div class="ach-card-title">EAST INDIA TOP RANKER IN IDEA PROTOTYPING BY INFOSYS</div>
+        <p class="ach-card-desc">At Infosys Global Hack 2025, our solution stood above the rest — recognized as the best across diverse industry challenges.</p>
+        <div class="ach-card-tag">2025 · Infosys</div>
+      </div>
+
+      <div class="ach-card reveal reveal-delay-1">
+        <div class="ach-card-year">24</div>
+        <span class="ach-card-icon">🎮</span>
+        <div class="ach-card-title">UNITY VERIFIED CREATOR</div>
+        <p class="ach-card-desc">Recognized by Unity Technologies as a Verified Creator — acknowledging our consistently high-quality production pipeline.</p>
+        <div class="ach-card-tag">2024 · Unity Technologies</div>
+      </div>
+
+      <div class="ach-card reveal reveal-delay-2">
+        <div class="ach-card-year">23</div>
+        <span class="ach-card-icon">🌍</span>
+        <div class="ach-card-title">2K COMMUNITY</div>
+        <p class="ach-card-desc">Our Soluion Crossed  50,000 active members — one of the fastest-growing indie Multimedia communities in India.</p>
+        <div class="ach-card-tag">2023 · Community</div>
+      </div>
+
+      <!-- <div class="ach-card reveal reveal-delay-3">
+        <div class="ach-card-year">24</div>
+        <span class="ach-card-icon">📰</span>
+        <div class="ach-card-title">FEATURED: GAME RANT</div>
+        <p class="ach-card-desc">"Top 10 Indie Games to Watch" — reaching millions of enthusiasts globally across digital and print.</p>
+        <div class="ach-card-tag">2024 · Press Feature</div>
+      </div>
+
+      <div class="ach-card reveal reveal-delay-4">
+        <div class="ach-card-year">23</div>
+        <span class="ach-card-icon">🚀</span>
+        <div class="ach-card-title">GLOBAL GAME JAM #1</div>
+        <p class="ach-card-desc">First place from 2,400 competing teams worldwide. The prototype grew into our most successful commercial release.</p>
+        <div class="ach-card-tag">2023 · Global Game Jam</div>
+      </div> -->
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     CONTACT
+══════════════════════════════════ -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="contact-grid reveal">
+      <div class="contact-left">
+        <div class="section-label">Get In Touch</div>
+        <h2 class="section-title">LET'S BUILD<br/><em>THE FUTURE</em></h2>
+        <p>Whether you're a publisher, partner, or player — we want to hear from you. Drop us a message and we'll get back within 24 hours.</p>
+      </div>
+      <form id="contactForm" class="contact-form">
+        <div class="contact-field">
+          <label for="contactName">Your Name</label>
+          <input id="contactName" name="name" type="text" required placeholder="Enter your full name" />
+        </div>
+        <div class="contact-field">
+          <label for="contactEmail">Email Address</label>
+          <input id="contactEmail" name="email" type="email" required placeholder="Enter your email" />
+        </div>
+        <div class="contact-field">
+          <label for="contactSubject">Subject</label>
+          <input id="contactSubject" name="subject" type="text" required placeholder="Subject — Game Dev / AR / VR / MR / Gen AI / Software" />
+        </div>
+        <div class="contact-field">
+          <label for="contactMessage">Tell us about your project</label>
+          <textarea id="contactMessage" name="message" required placeholder="Tell us about your project..."></textarea>
+        </div>
+        <div class="contact-submit">
+          <button type="submit">Send Message</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     FOOTER
+══════════════════════════════════ -->
+<footer>
+  <div class="footer-main">
+    <div>
+      <span class="footer-logo">IRON<span>WOLF</span></span>
+      <p class="footer-tagline">An independent game studio building visceral, cinematic experiences in Unity — shipped on Steam, played worldwide.</p>
+      <div class="footer-socials">
+        <a href="#" class="social-link" aria-label="Twitter/X">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+        <a href="#" class="social-link" aria-label="Discord">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+        </a>
+        <a href="#" class="social-link" aria-label="YouTube">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        </a>
+        <a href="#" class="social-link" aria-label="Steam">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M11.979 0C5.678 0 .511 4.86.022 11.037l6.432 2.658c.545-.371 1.203-.59 1.912-.59.063 0 .125.004.188.006l2.861-4.142V8.91c0-2.495 2.028-4.524 4.524-4.524 2.494 0 4.524 2.031 4.524 4.527s-2.03 4.525-4.524 4.525h-.105l-4.076 2.911c0 .051.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396-1.635 0-3.016-1.173-3.331-2.718L.436 15.27C1.862 20.307 6.486 24 11.979 24c6.627 0 11.999-5.373 11.999-12S18.606 0 11.979 0z"/></svg>
+        </a>
+        <a href="#" class="social-link" aria-label="Instagram">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div>
+      <div class="footer-col-title">Games</div>
+      <ul class="footer-nav">
+        <li><a href="#">All Titles</a></li>
+        <li><a href="#">Latest Release</a></li>
+        <li><a href="#">Coming Soon</a></li>
+        <li><a href="#">Patch Notes</a></li>
+        <li><a href="#">DLC & Updates</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="footer-col-title">Studio</div>
+      <ul class="footer-nav">
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Our Team</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Press Kit</a></li>
+        <li><a href="#">Dev Blog</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="footer-col-title">Connect</div>
+      <ul class="footer-nav">
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Discord Server</a></li>
+        <li><a href="#">Bug Reports</a></li>
+        <li><a href="#">Newsletter</a></li>
+        <li><a href="#">Partnerships</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 Meta Achievers Studio. All rights reserved.</span>
+    <ul class="footer-legal">
+      <li><a href="#">Privacy Policy</a></li>
+      <li><a href="#">Terms of Use</a></li>
+      <li><a href="#">Cookie Settings</a></li>
+      <li><a href="#">EULA</a></li>
+    </ul>
+    <div class="footer-engine">Built with <span>Unity</span> &amp; shipped on <span>Steam</span></div>
+  </div>
+</footer>
+
+<script>
+/* ── Cursor ── */
+const cur = document.getElementById('cursor');
+const ring = document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+(function animRing(){rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing)})();
+document.querySelectorAll('a,button,.proj-item,.game-tile,.ach-card,.stat-block').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.transform='translate(-50%,-50%) scale(2.5)';ring.style.transform='translate(-50%,-50%) scale(0.6)'});
+  el.addEventListener('mouseleave',()=>{cur.style.transform='translate(-50%,-50%) scale(1)';ring.style.transform='translate(-50%,-50%) scale(1)'});
+});
+
+/* ── Nav solid on scroll ── */
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>{
+  nav.classList.toggle('solid',window.scrollY>60);
+});
+
+/* ── Scroll reveal ── */
+const revEls=document.querySelectorAll('.reveal,.reveal-left');
+const revObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revObs.unobserve(e.target)}});
+},{threshold:0.1});
+revEls.forEach(el=>revObs.observe(el));
+
+/* ── Progress bars ── */
+const progObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.querySelectorAll('.proj-fill').forEach(f=>{
+        f.classList.remove('proj-fill-init');
+      });
+      e.target.querySelectorAll('.proj-pct[data-pct]').forEach(p=>{
+        animNum(p,parseInt(p.dataset.pct),900,'%');
+      });
+      progObs.unobserve(e.target);
+    }
+  });
+},{threshold:0.2});
+document.querySelectorAll('.proj-item').forEach(el=>progObs.observe(el));
+
+/* ── Counter animation ── */
+function animNum(el,target,dur,suffix='',decimals=0){
+  let start=null;
+  (function step(ts){
+    if(!start)start=ts;
+    const p=Math.min((ts-start)/dur,1);
+    const e=1-Math.pow(1-p,3);
+    const value=decimals
+      ? (e*target).toFixed(decimals)
+      : Math.round(e*target);
+    el.textContent=value+suffix;
+    if(p<1)requestAnimationFrame(step);
+    else el.textContent=(decimals ? target.toFixed(decimals) : target)+suffix;
+  })(performance.now());
+}
+const statsObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      animNum(document.getElementById('c1'),8,1800);
+      animNum(document.getElementById('c2'),10,1200);
+      animNum(document.getElementById('c3'),2,1400);
+      animNum(document.getElementById('c4'),1.5,900,'',1);
+      statsObs.unobserve(e.target);
+    }
+  });
+},{threshold:0.3});
+const sRow=document.querySelector('.stats-row');
+if(sRow)statsObs.observe(sRow);
+
+/* ── Featured video toggle ── */
+function toggleFeatured(){
+  const v=document.getElementById('featuredVideo');
+  const pi=document.getElementById('fPlayIcon');
+  const pau=document.getElementById('fPauseIcon');
+  if(v.paused){v.play();pi.style.display='none';pau.style.display='block'}
+  else{v.pause();pi.style.display='block';pau.style.display='none'}
+}
+
+function initBackgroundVideos(){
+  ['heroVideo','featuredVideo'].forEach(id=>{
+    const video=document.getElementById(id);
+    if(!video) return;
+    video.muted = true;
+    video.playsInline = true;
+    video.load();
+    const promise = video.play();
+    if(promise && typeof promise.catch === 'function'){
+      promise.catch(()=>{});
+    }
+  });
+}
+
+window.addEventListener('DOMContentLoaded', initBackgroundVideos);
+
+/* ── Contact form mailto submission ── */
+document.getElementById('contactForm')?.addEventListener('submit',function(e){
+  e.preventDefault();
+  const name=document.getElementById('contactName').value.trim();
+  const email=document.getElementById('contactEmail').value.trim();
+  const subject=document.getElementById('contactSubject').value.trim();
+  const message=document.getElementById('contactMessage').value.trim();
+  const to='metaachieversstudio@gmail.com';
+  const body=`Name: ${name}%0D%0AEmail: ${email}%0D%0A%0D%0A${encodeURIComponent(message)}`;
+  const mailto=`mailto:${to}?subject=${encodeURIComponent(subject)}&body=${body}`;
+  window.location.href=mailto;
+});
+</script>
+</body>
+</html>
