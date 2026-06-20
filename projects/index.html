@@ -1,435 +1,507 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Meta Achievers Studio — Projects</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,900;1,700&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      color-scheme: dark;
-      color: #f0ede6;
-      background: #080808;
-      font-family: 'Barlow', sans-serif;
-      --black: #080808;
-      --panel: #141414;
-      --yellow: #f5c518;
-      --white: #f0ede6;
-      --muted: rgba(240,237,230,0.65);
-    }
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-    html {
-      scroll-behavior: smooth;
-    }
-    body {
-      min-height: 100vh;
-      background: linear-gradient(180deg, #090909 0%, #080808 35%, #0e0e0e 100%);
-      color: var(--white);
-    }
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: radial-gradient(circle at top right, rgba(245,197,24,0.08), transparent 25%);
-      pointer-events: none;
-      opacity: 0.45;
-    }
-    a {
-      color: inherit;
-    }
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1.4rem 2rem;
-      background: rgba(8, 8, 8, 0.9);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-    }
-    .nav-logo {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.6rem;
-      letter-spacing: 0.14em;
-      text-decoration: none;
-      color: var(--white);
-    }
-    .nav-logo span {
-      color: var(--yellow);
-    }
-    .nav-link {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.85rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: rgba(240,237,230,0.7);
-      text-decoration: none;
-    }
-    .page-shell {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 3rem 2rem 5rem;
-    }
-    .hero {
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 3rem;
-      align-items: center;
-      min-height: calc(100vh - 120px);
-      padding: 2rem 0;
-    }
-    .hero-copy {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-    .eyebrow {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.85rem;
-      letter-spacing: 0.26em;
-      text-transform: uppercase;
-      color: var(--yellow);
-    }
-    .hero-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(3.8rem, 8vw, 6.8rem);
-      line-height: 0.9;
-      color: var(--white);
-    }
-    .hero-title em {
-      font-style: normal;
-      color: var(--yellow);
-    }
-    .hero-copy p {
-      max-width: 620px;
-      color: rgba(240,237,230,0.7);
-      line-height: 1.8;
-      font-size: 1rem;
-    }
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-top: 0.5rem;
-    }
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem 2rem;
-      border-radius: 999px;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      text-decoration: none;
-      transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
-    }
-    .btn-primary {
-      background: var(--yellow);
-      color: var(--black);
-    }
-    .btn-secondary {
-      border: 1px solid rgba(245,197,24,0.4);
-      color: rgba(240,237,230,0.9);
-      background: transparent;
-    }
-    .btn:hover {
-      transform: translateY(-2px);
-    }
-    .hero-slider {
-      position: relative;
-      min-height: 560px;
-      border-radius: 32px;
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: #111;
-      box-shadow: 0 50px 120px rgba(0,0,0,0.35);
-    }
-    .slides {
-      position: relative;
-      width: 100%;
-      height: 100%;
-    }
-    .slide {
-      position: absolute;
-      inset: 0;
-      background-size: cover;
-      background-position: center center;
-      opacity: 0;
-      transition: opacity 1s ease;
-    }
-    .slide.active {
-      opacity: 1;
-      z-index: 1;
-    }
-    .slide img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      filter: saturate(0.95) brightness(0.98);
-    }
-    .slide::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, rgba(8,8,8,0.05) 0%, rgba(8,8,8,0.5) 40%, rgba(8,8,8,0.95) 100%);
-    }
-    .slider-copy {
-      position: absolute;
-      bottom: 2rem;
-      left: 2rem;
-      z-index: 2;
-      max-width: 52%;
-      color: #fff;
-    }
-    .slider-copy .label {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.75rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      margin-bottom: 0.75rem;
-      color: rgba(245,197,24,0.92);
-    }
-    .slider-copy h2 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(2.5rem, 5vw, 4rem);
-      line-height: 1;
-      margin-bottom: 1rem;
-    }
-    .slider-copy p {
-      max-width: 420px;
-      color: rgba(255,255,255,0.85);
-      margin-bottom: 1.4rem;
-      line-height: 1.7;
-    }
-    .slider-actions {
-      display: flex;
-      gap: 0.85rem;
-      flex-wrap: wrap;
-    }
-    .dots {
-      position: absolute;
-      left: 2rem;
-      bottom: 1rem;
-      display: flex;
-      gap: 0.6rem;
-      z-index: 2;
-    }
-    .dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: rgba(240,237,230,0.25);
-      border: 1px solid rgba(245,197,24,0.35);
-      cursor: pointer;
-      transition: transform 0.2s ease, background 0.2s ease;
-    }
-    .dot.active {
-      background: var(--yellow);
-      transform: scale(1.2);
-    }
-    .details {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 1.25rem;
-      margin-top: 3rem;
-    }
-    .detail-card {
-      padding: 1.8rem;
-      border-radius: 24px;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.08);
-      box-shadow: inset 0 0 40px rgba(0,0,0,0.1);
-    }
-    .detail-card h3 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.45rem;
-      margin-bottom: 0.85rem;
-    }
-    .detail-card p {
-      color: rgba(240,237,230,0.72);
-      line-height: 1.8;
-      font-size: 0.95rem;
-    }
-    .back-link {
-      display: inline-block;
-      margin-top: 1.5rem;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.9rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: rgba(240,237,230,0.8);
-      text-decoration: none;
-    }
-    @media (max-width: 1080px) {
-      .hero {
-        grid-template-columns: 1fr;
-        min-height: auto;
-      }
-      .hero-slider {
-        min-height: 480px;
-      }
-      .slider-copy {
-        max-width: 100%;
-      }
-    }
-    @media (max-width: 720px) {
-      nav {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      .page-shell {
-        padding: 2rem 1.5rem 4rem;
-      }
-      .hero {
-        gap: 2rem;
-      }
-      .hero-title {
-        font-size: clamp(2.8rem, 12vw, 4.5rem);
-      }
-      .hero-actions {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      .btn {
-        width: 100%;
-      }
-      .details {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cartridge — Game Showcase</title>
+<style>
+  :root{
+    --ink:#0e0f0c;
+    --bone:#f2ede2;
+    --moss:#3c5a40;
+    --signal:#d9ff5b;
+    --rust:#b5512e;
+    --line: rgba(242,237,226,0.18);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--ink);
+    color:var(--bone);
+    font-family:'Iosevka','JetBrains Mono',ui-monospace,monospace;
+    overflow-x:hidden;
+  }
+  @font-face{
+    font-family:'DisplayFace';
+    src:local('Georgia');
+  }
+  h1,h2,h3{
+    font-family: Georgia, 'Iowan Old Style', serif;
+    font-weight:700;
+    margin:0;
+    letter-spacing:-0.01em;
+  }
+
+  /* ===================== HERO SLIDESHOW ===================== */
+  .hero{
+    position:relative;
+    width:100%;
+    height:100vh;
+    overflow:hidden;
+  }
+  .slide{
+    position:absolute;
+    inset:0;
+    opacity:0;
+    transition:opacity 1.1s ease;
+    background-size:cover;
+    background-position:center;
+  }
+  .slide.active{ opacity:1; z-index:2; }
+  .slide::after{
+    content:'';
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(14,15,12,0.05) 0%, rgba(14,15,12,0.15) 45%, rgba(14,15,12,0.92) 100%);
+  }
+
+  .hero-top{
+    position:absolute; top:0; left:0; right:0;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:28px 48px;
+    z-index:10;
+  }
+  .brand{
+    font-family: Georgia, serif;
+    font-size:20px;
+    letter-spacing:0.04em;
+    color:var(--bone);
+  }
+  .brand span{ color:var(--signal); }
+  .hero-nav{
+    display:flex; gap:24px;
+    font-size:12px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:rgba(242,237,226,0.65);
+  }
+
+  .hero-overlay{
+    position:absolute;
+    left:0; right:0; bottom:0;
+    z-index:10;
+    padding:0 48px 56px;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:40px;
+  }
+  .hero-info{ max-width:640px; }
+  .hero-eyebrow{
+    font-size:12px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--signal);
+    margin-bottom:14px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .hero-eyebrow .num{ color:rgba(242,237,226,0.5); }
+  .hero-title{
+    font-size:clamp(40px,6vw,76px);
+    line-height:0.98;
+    margin-bottom:14px;
+  }
+  .hero-desc{
+    font-size:15px;
+    line-height:1.55;
+    color:rgba(242,237,226,0.78);
+    max-width:480px;
+    margin-bottom:22px;
+  }
+  .play-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    background:var(--signal);
+    color:var(--ink);
+    text-decoration:none;
+    padding:13px 22px;
+    font-size:13px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    font-weight:700;
+    border-radius:2px;
+    transition:transform .25s ease, background .25s ease;
+  }
+  .play-btn:hover{ transform:translateY(-2px); background:#eaffa0; }
+  .play-btn svg{ width:14px; height:14px; }
+
+  .hero-dots{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    align-items:flex-end;
+  }
+  .dot-row{ display:flex; gap:8px; }
+  .dot{
+    width:34px; height:3px;
+    background:rgba(242,237,226,0.25);
+    position:relative;
+    overflow:hidden;
+    cursor:pointer;
+  }
+  .dot .fill{
+    position:absolute; left:0; top:0; bottom:0; width:0%;
+    background:var(--signal);
+  }
+  .dot.active .fill{ animation: fillBar 5s linear forwards; }
+  @keyframes fillBar{ from{width:0%;} to{width:100%;} }
+  .dot-label{
+    font-size:11px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:rgba(242,237,226,0.55);
+  }
+  .scroll-cue{
+    position:absolute;
+    left:50%; bottom:18px;
+    transform:translateX(-50%);
+    z-index:10;
+    font-size:10px;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    color:rgba(242,237,226,0.45);
+    display:flex; flex-direction:column; align-items:center; gap:8px;
+  }
+  .scroll-cue::after{
+    content:'';
+    width:1px; height:26px;
+    background:linear-gradient(180deg, rgba(242,237,226,0.6), transparent);
+    animation: cueMove 1.8s ease-in-out infinite;
+  }
+  @keyframes cueMove{ 0%,100%{opacity:0.3;} 50%{opacity:1;} }
+
+  @media (max-width:720px){
+    .hero-top{ padding:20px 22px; }
+    .hero-nav{ display:none; }
+    .hero-overlay{ padding:0 22px 36px; flex-direction:column; align-items:flex-start; gap:18px; }
+    .hero-dots{ width:100%; align-items:flex-start; }
+    .dot-row{ width:100%; }
+    .dot{ flex:1; }
+  }
+
+  /* ===================== GRID SECTION ===================== */
+  .archive{
+    padding:70px 48px 100px;
+    background:var(--ink);
+  }
+  .archive-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    border-bottom:1px solid var(--line);
+    padding-bottom:22px;
+    margin-bottom:36px;
+    flex-wrap:wrap;
+    gap:14px;
+  }
+  .archive-head h2{
+    font-size:clamp(26px,3.4vw,38px);
+  }
+  .archive-count{
+    font-size:12px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:rgba(242,237,226,0.5);
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:2px;
+    background:var(--line);
+  }
+  .card{
+    position:relative;
+    aspect-ratio:1/1;
+    background:var(--ink);
+    overflow:hidden;
+    cursor:pointer;
+    display:block;
+    text-decoration:none;
+    color:inherit;
+  }
+  .card img{
+    width:100%; height:100%;
+    object-fit:cover;
+    display:block;
+    transition:transform .55s ease, filter .55s ease;
+    filter:saturate(0.85);
+  }
+  .card:hover img{
+    transform:scale(1.06);
+    filter:saturate(1.1);
+  }
+  .card-shade{
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(14,15,12,0) 30%, rgba(14,15,12,0.94) 100%);
+  }
+  .card-info{
+    position:absolute; left:0; right:0; bottom:0;
+    padding:16px;
+    transform:translateY(8px);
+    transition:transform .35s ease;
+  }
+  .card-tag{
+    font-size:10px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--signal);
+    margin-bottom:6px;
+    opacity:0;
+    transition:opacity .35s ease;
+  }
+  .card:hover .card-tag{ opacity:1; }
+  .card-title{
+    font-family:Georgia, serif;
+    font-size:17px;
+    margin-bottom:4px;
+  }
+  .card-desc{
+    font-size:11.5px;
+    line-height:1.4;
+    color:rgba(242,237,226,0.7);
+    max-height:0;
+    overflow:hidden;
+    opacity:0;
+    transition:max-height .35s ease, opacity .35s ease;
+  }
+  .card:hover .card-desc{
+    max-height:60px;
+    opacity:1;
+  }
+  .card-cta{
+    margin-top:8px;
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-size:10px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--bone);
+    opacity:0;
+    transition:opacity .35s ease;
+  }
+  .card:hover .card-cta{ opacity:0.9; }
+  .card-cta svg{ width:10px; height:10px; }
+
+  @media (max-width:1100px){
+    .grid{ grid-template-columns:repeat(3,1fr); }
+  }
+  @media (max-width:760px){
+    .archive{ padding:50px 20px 70px; }
+    .grid{ grid-template-columns:repeat(2,1fr); }
+    .card-desc{ display:none; }
+  }
+
+  footer{
+    padding:26px 48px 40px;
+    font-size:11px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:rgba(242,237,226,0.35);
+    text-align:center;
+  }
+</style>
 </head>
 <body>
-  <nav>
-    <a class="nav-logo" href="../">META<span>ACHIEVERS</span></a>
-    <a class="nav-link" href="../">Home</a>
-  </nav>
-  <main class="page-shell">
-    <section class="hero">
-      <div class="hero-copy">
-        <span class="eyebrow">Project Showcase</span>
-        <h1 class="hero-title">Projects to Dominate the <br /><em>Wor</em></h1>
-        <p>
-          Present your latest project with cinematic style. The featured images slide automatically every six seconds so your visitors always see fresh visuals.
-        </p>
-        <div class="hero-actions">
-          <a href="#watch" class="btn btn-primary">Watch Trailer</a>
-          <a href="#details" class="btn btn-secondary">Learn More</a>
+
+<!-- ============ HERO SLIDESHOW ============ -->
+<section class="hero" id="hero">
+  <div class="hero-top">
+    <div class="brand">META<span>ACHIEVERS</span></div>
+    <nav class="hero-nav">
+      <span>Games</span><span>Studio</span><span>Contact</span>
+    </nav>
+  </div>
+
+  <!-- slides injected by JS -->
+  <div id="slideContainer"></div>
+
+  <div class="hero-overlay">
+    <div class="hero-info">
+      <div class="hero-eyebrow"><span class="num" id="slideIndex">01</span> / 05 — Featured Release</div>
+      <h1 class="hero-title" id="slideTitle">Title</h1>
+      <p class="hero-desc" id="slideDesc">Description</p>
+      <a class="play-btn" id="slideLink" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 20.5v-17c0-.59.34-1.11.83-1.37l13.69 9.37-13.69 9.37c-.49-.26-.83-.78-.83-1.37z"/><path d="M17.5 12.5l-4.6-3.15L6.3 4.07l11.2 7.66zm0-1l4.39-3a1.5 1.5 0 0 0 0-2.5l-4.39-3-4.6 3.15zm0 1l-4.6 3.15 4.6 3.15 4.39-3a1.5 1.5 0 0 0 0-2.5z"/></svg>
+        Get it on Play Store
+      </a>
+    </div>
+    <div class="hero-dots" id="dotContainer"></div>
+  </div>
+
+  <div class="scroll-cue">Scroll for all projects</div>
+</section>
+
+<!-- ============ ARCHIVE GRID ============ -->
+<section class="archive">
+  <div class="archive-head">
+    <h2>Full Catalog</h2>
+    <div class="archive-count" id="catalogCount">00 Titles</div>
+  </div>
+  <div class="grid" id="grid"></div>
+</section>
+
+<footer>© 2026 Meta Achievers Studio — Built for play, one tap at a time</footer>
+
+<script>
+  // ====== REPLACE THIS DATA WITH YOUR REAL GAMES ======
+  const games = [
+    {
+      title: "PARAKRAM- 2D Tackler Game",
+      tagline: "Released",
+      desc: "A neon racer through collapsing skylines. Drift, boost, survive the descent.",
+      image: "../images/Parakim.jpeg",
+      link: "https://play.google.com/store/apps/details?id=com.forge.nightfall"
+    },
+    {
+      title: "Drift Chaos",
+      tagline: "Featured Release",
+      desc: "A 2D drift game set in a world of collapsing cities and endless night. Tap to boost, drift through chaos.",
+      image: "../images/DRIFTCC.png",
+      link: "https://play.google.com/store/apps/details?id=com.forge.orchard"
+    },
+    {
+      title: "Real-State Business Simulator",
+      tagline: "Featured Release",
+      desc: "Steam-powered tactics. Build your crew, arm your airship, take the skies.",
+      image: "../images/Realst.jpeg",
+      link: "https://play.google.com/store/apps/details?id=com.forge.brassbound"
+    },
+    {
+      title: "Static Hour",
+      tagline: "Featured Release",
+      desc: "A radio-drama detective game told entirely through sound and choice.",
+      image: "https://picsum.photos/seed/statichour/1600/900",
+      link: "https://play.google.com/store/apps/details?id=com.forge.statichour"
+    },
+    {
+      title: "Tideglass",
+      tagline: "Featured Release",
+      desc: "Build floating villages, ride the tide, outlast the storm season.",
+      image: "https://picsum.photos/seed/tideglass/1600/900",
+      link: "https://play.google.com/store/apps/details?id=com.forge.tideglass"
+    },
+    {
+      title: "Mothlight",
+      tagline: "Side Project",
+      desc: "A side-scrolling platformer where light is your only weapon against the dark.",
+      image: "https://picsum.photos/seed/mothlight/1600/900",
+      link: "https://play.google.com/store/apps/details?id=com.forge.mothlight"
+    },
+    {
+      title: "Quarry Run",
+      tagline: "Side Project",
+      desc: "An endless mining roguelite. Dig deep, sell loot, don't get greedy.",
+      image: "https://picsum.photos/seed/quarryrun/1600/900",
+      link: "https://play.google.com/store/apps/details?id=com.forge.quarryrun"
+    },
+    {
+      title: "Paperclip Kingdom",
+      tagline: "Side Project",
+      desc: "An idle strategy game about an office that slowly becomes an empire.",
+      image: "https://picsum.photos/seed/paperclip/1600/900",
+      link: "https://play.google.com/store/apps/details?id=com.forge.paperclip"
+    }
+  ];
+
+  const SLIDE_COUNT = Math.min(5, games.length);
+  const SLIDE_DURATION = 5000;
+
+  // ---- Build hero slides ----
+  const slideContainer = document.getElementById('slideContainer');
+  const dotContainer = document.getElementById('dotContainer');
+
+  for (let i = 0; i < SLIDE_COUNT; i++) {
+    const slide = document.createElement('div');
+    slide.className = 'slide' + (i === 0 ? ' active' : '');
+    slide.style.backgroundImage = `url(${games[i].image})`;
+    slide.dataset.index = i;
+    slideContainer.appendChild(slide);
+  }
+
+  const dotRow = document.createElement('div');
+  dotRow.className = 'dot-row';
+  for (let i = 0; i < SLIDE_COUNT; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'dot' + (i === 0 ? ' active' : '');
+    dot.innerHTML = '<div class="fill"></div>';
+    dot.addEventListener('click', () => goToSlide(i));
+    dotRow.appendChild(dot);
+  }
+  dotContainer.appendChild(dotRow);
+  const dotLabel = document.createElement('div');
+  dotLabel.className = 'dot-label';
+  dotLabel.textContent = 'Tap to jump';
+  dotContainer.appendChild(dotLabel);
+
+  const slideEls = [...document.querySelectorAll('.slide')];
+  const dotEls = [...document.querySelectorAll('.dot')];
+  const slideIndexEl = document.getElementById('slideIndex');
+  const slideTitleEl = document.getElementById('slideTitle');
+  const slideDescEl = document.getElementById('slideDesc');
+  const slideLinkEl = document.getElementById('slideLink');
+
+  let current = 0;
+  let timer = null;
+
+  function renderInfo(i) {
+    const g = games[i];
+    slideIndexEl.textContent = String(i + 1).padStart(2, '0');
+    slideTitleEl.textContent = g.title;
+    slideDescEl.textContent = g.desc;
+    slideLinkEl.href = g.link;
+  }
+
+  function goToSlide(i) {
+    slideEls[current].classList.remove('active');
+    dotEls[current].classList.remove('active');
+    current = i;
+    slideEls[current].classList.add('active');
+    dotEls[current].classList.add('active');
+    renderInfo(current);
+    restartTimer();
+  }
+
+  function nextSlide() {
+    goToSlide((current + 1) % SLIDE_COUNT);
+  }
+
+  function restartTimer() {
+    if (timer) clearTimeout(timer);
+    timer = setTimeout(nextSlide, SLIDE_DURATION);
+  }
+
+  renderInfo(0);
+  restartTimer();
+
+  // ---- Build archive grid (all games) ----
+  const grid = document.getElementById('grid');
+  document.getElementById('catalogCount').textContent =
+    String(games.length).padStart(2, '0') + ' Titles';
+
+  games.forEach(g => {
+    const card = document.createElement('a');
+    card.className = 'card';
+    card.href = g.link;
+    card.target = '_blank';
+    card.rel = 'noopener';
+    card.innerHTML = `
+      <img src="${g.image}" alt="${g.title}">
+      <div class="card-shade"></div>
+      <div class="card-info">
+        <div class="card-tag">${g.tagline}</div>
+        <div class="card-title">${g.title}</div>
+        <div class="card-desc">${g.desc}</div>
+        <div class="card-cta">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 20.5v-17c0-.59.34-1.11.83-1.37l13.69 9.37-13.69 9.37c-.49-.26-.83-.78-.83-1.37z"/></svg>
+          Open Play Store
         </div>
       </div>
-      <div class="hero-slider">
-        <div class="slides">
-          <div class="slide active" style="background-image: url('../images/Parakram.jpeg');">
-    <img src="../images/Parakram.jpeg" alt="Parakram poster">
-</div>
-              <div class="label">Parakram Project</div>
-              <h2>Action in Every Frame</h2>
-              <p>Showcase the visuals, lighting, and gameplay tone from your active development pipeline.</p>
-              <div class="slider-actions">
-                <a href="#watch" class="btn btn-primary">Watch Trailer</a>
-                <a href="#details" class="btn btn-secondary">Learn More</a>
-              </div>
-            </div>
-          </div>
-          <div class="slide" style="background-image: url('../images/GeoAr.jpg');">
-            <img src="../images/GeoAr.jpg" alt="GeoAr poster">
-            <div class="slider-copy">
-              <div class="label">GeoAr Showcase</div>
-              <h2>Immersive Visual Storytelling</h2>
-              <p>Display your studio's rich concept art and world-building through a polished image carousel.</p>
-            </div>
-          </div>
-           <div class="slide" style="background-image: url('');">
-            <img src="../images/GeoAr.jpg" alt="GeoAr poster">
-            <div class="slider-copy">
-              <div class="label">GeoAr Showcase</div>
-              <h2>Immersive Visual Storytelling</h2>
-              <p>Display your studio's rich concept art and world-building through a polished image carousel.</p>
-            </div>
-          </div>
-          <div class="slide" style="background-image: url('../images/trf.jpg');">
-            <img src="../images/trf.jpg" alt="Traffic Rules poster">
-            <div class="slider-copy">
-              <div class="label">Traffic Rules</div>
-              <h2>High-Speed, High Stakes</h2>
-              <p>Rotate through your key scenes to keep the page dynamic and engaging on repeat visits.</p>
-            </div>
-          </div>
-        </div>
-        <div class="dots">
-          <button class="dot active" type="button" data-index="0" aria-label="Slide 1"></button>
-          <button class="dot" type="button" data-index="1" aria-label="Slide 2"></button>
-          <button class="dot" type="button" data-index="2" aria-label="Slide 3"></button>
-        </div>
-      </div>
-    </section>
+    `;
+    grid.appendChild(card);
+  });
+</script>
 
-    <section class="details" id="details">
-      <article class="detail-card">
-        <h3>Project Vision</h3>
-        <p>Set the tone for your studio with a short, cinematic explanation of what makes this project unique and why it matters to players.</p>
-      </article>
-      <article class="detail-card">
-        <h3>Current Status</h3>
-        <p>Share progress updates, development milestones, and any key production states like alpha, beta, or internal testing.</p>
-      </article>
-      <article class="detail-card">
-        <h3>Upcoming Focus</h3>
-        <p>Outline the next items on the roadmap: gameplay polish, level design, audio, or marketing content for the next release wave.</p>
-      </article>
-    </section>
-
-    <a class="back-link" href="../">Back to Home</a>
-  </main>
-  <script>
-    const slides = document.querySelectorAll('.slide');
-    const dots = document.querySelectorAll('.dot');
-    let currentIndex = 0;
-    const intervalTime = 6000;
-    let slideInterval = null;
-
-    function setSlide(index) {
-      slides.forEach((slide, slideIndex) => {
-        slide.classList.toggle('active', slideIndex === index);
-      });
-      dots.forEach((dot, dotIndex) => {
-        dot.classList.toggle('active', dotIndex === index);
-      });
-      currentIndex = index;
-    }
-
-    function nextSlide() {
-      const nextIndex = (currentIndex + 1) % slides.length;
-      setSlide(nextIndex);
-    }
-
-    function startSlider() {
-      slideInterval = setInterval(nextSlide, intervalTime);
-    }
-
-    dots.forEach(dot => {
-      dot.addEventListener('click', () => {
-        setSlide(Number(dot.dataset.index));
-        clearInterval(slideInterval);
-        startSlider();
-      });
-    });
-
-    startSlider();
-  </script>
 </body>
 </html>
