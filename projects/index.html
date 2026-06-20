@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/png" href="../images/MGlogo.png">
-<title>Cartridge — Game Showcase</title>
+<title>Meta Achievers Studio — Projects</title>
 <style>
   :root{
     --ink:#0e0f0c;
@@ -152,6 +152,36 @@
     text-transform:uppercase;
     color:rgba(242,237,226,0.55);
   }
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:1000;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:1.4rem 2.5rem;
+    background:linear-gradient(to bottom,rgba(14,15,12,0.95),transparent);
+    transition:background 0.3s;
+  }
+  nav.solid{background:rgba(14,15,12,0.98);border-bottom:1px solid rgba(242,237,226,0.12);}
+  .nav-logo{
+    font-family:Georgia, serif;
+    font-size:1.35rem;letter-spacing:0.12em;
+    color:var(--bone);text-decoration:none;
+  }
+  .nav-logo span{color:var(--signal);}
+  .nav-links{display:flex;gap:2rem;list-style:none;margin:0;padding:0;}
+  .nav-links a{
+    font-size:0.8rem;font-weight:600;
+    letter-spacing:0.18em;text-transform:uppercase;text-decoration:none;
+    color:rgba(242,237,226,0.72);transition:color 0.2s;
+  }
+  .nav-links a:hover{color:var(--signal);}
+  .nav-cta{
+    font-size:0.75rem;font-weight:700;
+    letter-spacing:0.18em;text-transform:uppercase;text-decoration:none;
+    color:var(--ink);background:var(--signal);
+    padding:0.55rem 1.25rem;border-radius:2px;
+    transition:background 0.2s,transform 0.15s;
+  }
+  .nav-cta:hover{background:#eaffa0;transform:translateY(-1px);}
+
   .scroll-cue{
     position:absolute;
     left:50%; bottom:18px;
@@ -307,12 +337,19 @@
 <body>
 
 <!-- ============ HERO SLIDESHOW ============ -->
+<nav id="nav">
+  <a class="nav-logo" href="../">META<span>ACHIEVERS</span></a>
+  <ul class="nav-links">
+    <li><a href="../">Home</a></li>
+    <li><a href="#hero">Games</a></li>
+    <li><a href="#archive">Studio</a></li>
+    <li><a href="../privacypolicy_ChaseChaos/">Privacy Policy</a></li>
+  </ul>
+  <a href="#grid" class="nav-cta">View Games</a>
+</nav>
 <section class="hero" id="hero">
   <div class="hero-top">
     <div class="brand">META<span>ACHIEVERS</span></div>
-    <nav class="hero-nav">
-      <span>Games</span><span>Studio</span><span>Contact</span>
-    </nav>
   </div>
 
   <!-- slides injected by JS -->
@@ -501,6 +538,11 @@
       </div>
     `;
     grid.appendChild(card);
+  });
+
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('solid', window.scrollY > 60);
   });
 </script>
 
